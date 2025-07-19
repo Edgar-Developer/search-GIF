@@ -1,4 +1,4 @@
-let limit = 12;
+let limit = 20;
 
 function renderGifs(data) {
 
