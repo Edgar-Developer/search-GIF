@@ -1,0 +1,75 @@
+let limit = 12;
+
+function renderGifs(data) {
+
+  setTimeout(() => {// Simula un retraso para mostrar los GIFs
+    if(data.length > 0) {
+      controls.style.display = 'flex';// Muestra los controles si hay resultados
+    }else {
+      controls.style.display = 'none';
+    }       
+    }, 3000);    
+  
+    const section = document.querySelector('.contenedor-gif');
+    section.innerHTML = ''; // Limpia la sección antes de renderizar nuevos GIFs
+    
+    data.forEach(gif => {// Crea un div para cada GIF
+      const div = document.createElement('div');
+      div.classList.add('contenedor-elementos');
+      
+      const img = document.createElement('img');
+      img.classList.add('gif');
+      img.src = gif.images.fixed_height.url;// Asigna la URL del GIF a la imagen
+      img.atl = gif.title || 'GIF';
+
+      div.appendChild(img);
+      section.appendChild(div);
+      console.log(data);   
+    })
+}
+
+async function search(query) {
+  const enpointSeach = `https://api.giphy.com/v1/gifs/search?api_key=${API_Key}&q=${query}&limit=${limit}`;
+
+  try {
+    const res = await fetch(enpointSeach);
+    const dataRes = await res.json(); 
+    const dataTotal = dataRes.data;
+    renderGifs(dataTotal);
+  }
+  catch (error){
+    console.log(error);    
+  }    
+}
+
+async function trending() {
+  const enpointTrending = `https://api.giphy.com/v1/gifs/trending?api_key=${API_Key}&limit=${limit}`;
+
+  try {
+    const res = await fetch(enpointTrending);
+    const dataTrend = await res.json();
+    const dataTotal = dataTrend.data;
+    renderGifs(dataTotal);
+
+  } catch (error) {
+    console.log(error);    
+  }
+}
+
+async function fetchPage ({query = '',  page = 0 }) {// Función para obtener una página específica de resultados
+  const offset = page * limit;// Calcula el offset basado en la página actual y el límite de resultados por página
+  const baseUrl = query // Verifica si hay una consulta de búsqueda
+  ? `https://api.giphy.com/v1/gifs/search?api_key=${API_Key}&q=${query}&limit=${limit}&offset=${offset}`
+  : `https://api.giphy.com/v1/gifs/trending?api_key=${API_Key}&limit=${limit}&offset=${offset}`;
+
+  try {
+    const res = await fetch(baseUrl);
+    const dataPage = await res.json();
+    const dataTotal = dataPage.data;
+    renderGifs(dataTotal);
+
+
+  } catch (error) {
+    console.error('Error al cargar los GIFs:', error);
+  }
+}

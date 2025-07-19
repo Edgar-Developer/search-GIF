@@ -1,0 +1,43 @@
+let currentPage = 1;
+let currenQuery = '';// Variable para almacenar la consulta actual
+
+document.addEventListener('DOMContentLoaded', () => {
+  trending();// Carga los GIFs de tendencia al inicio
+});
+
+button.addEventListener('click', (event) => {
+  event.preventDefault();// Previene el comportamiento por defecto del botón
+  const query = input.value.trim();// Obtiene el valor del input y elimina espacios en blanco al inicio y al final
+  if(query) {// Verifica si hay una consulta válida
+    currenQuery = query;// Actualiza currenQuery con la consulta ingresada
+    search(query);// Llama a la función de búsqueda con la consulta ingresada
+      console.log('buscando', query);      
+  } else {
+    console.log('Ingresa una busqueda');    
+  }
+});
+
+function updateBtnPre() {
+  if (currentPage <= 1) {
+    btnPre.disabled = true; // Deshabilita el botón "Anterior" si estamos en la primera página
+  } else {
+    btnPre.disabled = false;
+  }
+}
+
+btnNext.addEventListener('click', () => {
+  currentPage++;
+
+    fetchPage({query: currenQuery, page: currentPage});  // Llama a la función para obtener la siguiente página de resultados
+    pagIndicador.textContent = `Página ${currentPage}`;
+    document.documentElement.scrollTop = 0;
+})
+
+btnPre.addEventListener('click', () => {
+  if(currentPage > 1) {
+    currentPage--;
+    fetchPage({query: currenQuery, page: currentPage});
+    pagIndicador.textContent = `Página ${currentPage}`;
+    document.documentElement.scrollTop = 0;
+  }
+})
