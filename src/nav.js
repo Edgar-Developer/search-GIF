@@ -7,7 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 button.addEventListener('click', (event) => {
   event.preventDefault();// Previene el comportamiento por defecto del botón
-  const query = input.value.trim();// Obtiene el valor del input y elimina espacios en blanco al inicio y al final
+  const query = input.value.trim();// Obtiene el valor del input y elimina espacios en blanco al inicio y al final de la cadena de busqueda
+  currentPage = 1;// Reinicia la página actual a 1 al realizar una nueva búsqueda
+  pagIndicador.textContent = `Página ${currentPage}`;// Actualiza el indicador de página a 1 al iniciar una nueva búsqueda
+  fetchPage({query: currenQuery, page: currentPage});
+  
+  
   if(query) {// Verifica si hay una consulta válida
     currenQuery = query;// Actualiza currenQuery con la consulta ingresada
     search(query);// Llama a la función de búsqueda con la consulta ingresada

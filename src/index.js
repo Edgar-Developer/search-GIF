@@ -48,6 +48,7 @@ async function trending() {
   try {
     const res = await fetch(enpointTrending);
     const dataTrend = await res.json();
+    console.log(dataTrend);
     const dataTotal = dataTrend.data;
     renderGifs(dataTotal);
 
@@ -56,9 +57,10 @@ async function trending() {
   }
 }
 
-async function fetchPage ({query = '',  page = 0 }) {// Función para obtener una página específica de resultados
-  const offset = page * limit;// Calcula el offset basado en la página actual y el límite de resultados por página
-  const baseUrl = query // Verifica si hay una consulta de búsqueda
+async function fetchPage ({query = '',  page = 0 }) {// Función para obtener una página específica de resultados 
+  const offset = page * limit;// Calcula el offset basado en la página actual y el límite de resultados por página agarra el valor de la página actual y lo multiplica por el límite de resultados por página
+  console.log('offset', offset);
+  const baseUrl = query // Verifica si la busqueda es sobre tendencias o una búsqueda específica si el valor ingresado en el input es una cadena vacía entonces se considera que se está buscando GIFs de tendencia de lo contrario se considera que se está buscando GIFs específicos entoncves el valor de la variable baseUrl se asigna a la URL de la API de Giphy para buscar GIFs de tendencia o para buscar GIFs específicos según la consulta ingresada en el input
   ? `https://api.giphy.com/v1/gifs/search?api_key=${API_Key}&q=${query}&limit=${limit}&offset=${offset}`
   : `https://api.giphy.com/v1/gifs/trending?api_key=${API_Key}&limit=${limit}&offset=${offset}`;
 
