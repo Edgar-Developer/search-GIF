@@ -3,6 +3,7 @@ let currenQuery = '';// Variable para almacenar la consulta actual
 
 document.addEventListener('DOMContentLoaded', () => {
   trending();// Carga los GIFs de tendencia al inicio
+  updateBtnPre()
 });
 
 button.addEventListener('click', (event) => {
@@ -20,6 +21,8 @@ button.addEventListener('click', (event) => {
   } else {
     console.log('Ingresa una busqueda');    
   }
+  updateBtnPre(); // Actualiza el estado del botón "Anterior"
+  document.documentElement.scrollTop = 0; // Desplaza la página hacia arriba al realizar una búsqueda
 });
 
 function updateBtnPre() {
@@ -35,6 +38,7 @@ btnNext.addEventListener('click', () => {
 
     fetchPage({query: currenQuery, page: currentPage});  // Llama a la función para obtener la siguiente página de resultados
     pagIndicador.textContent = `Página ${currentPage}`;
+    updateBtnPre();
     document.documentElement.scrollTop = 0;
 })
 
@@ -43,6 +47,7 @@ btnPre.addEventListener('click', () => {
     currentPage--;
     fetchPage({query: currenQuery, page: currentPage});
     pagIndicador.textContent = `Página ${currentPage}`;
+    updateBtnPre()
     document.documentElement.scrollTop = 0;
   }
 })

@@ -29,12 +29,12 @@ function renderGifs(data) {
 }
 
 async function search(query) {
-  const enpointSeach = `https://api.giphy.com/v1/gifs/search?api_key=${API_Key}&q=${query}&limit=${limit}`;
+  const endpointSeach = `https://api.giphy.com/v1/gifs/search?api_key=${API_Key}&q=${query}&limit=${limit}`;
 
   try {
-    const res = await fetch(enpointSeach);
+    const res = await fetch(endpointSeach);
     const dataRes = await res.json(); 
-    const dataTotal = dataRes.data;
+    const dataTotal = await dataRes.data;
     renderGifs(dataTotal);
   }
   catch (error){
@@ -43,13 +43,13 @@ async function search(query) {
 }
 
 async function trending() {
-  const enpointTrending = `https://api.giphy.com/v1/gifs/trending?api_key=${API_Key}&limit=${limit}`;
+  const endpointTrending = `https://api.giphy.com/v1/gifs/trending?api_key=${API_Key}&limit=${limit}`;
 
   try {
-    const res = await fetch(enpointTrending);
+    const res = await fetch(endpointTrending);
     const dataTrend = await res.json();
     console.log(dataTrend);
-    const dataTotal = dataTrend.data;
+    const dataTotal = await dataTrend.data;
     renderGifs(dataTotal);
 
   } catch (error) {
@@ -67,7 +67,7 @@ async function fetchPage ({query = '',  page = 0 }) {// Función para obtener un
   try {
     const res = await fetch(baseUrl);
     const dataPage = await res.json();
-    const dataTotal = dataPage.data;
+    const dataTotal = await dataPage.data;
     renderGifs(dataTotal);
 
 
