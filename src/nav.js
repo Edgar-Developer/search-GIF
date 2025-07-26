@@ -36,7 +36,7 @@ function updateBtnPre() {
 btnNext.addEventListener('click', () => {
   currentPage++;
 
-    fetchPage({query: currenQuery, page: currentPage});  // Llama a la función para obtener la siguiente página de resultados
+    fetchPage({query: currenQuery, page: currentPage});  // Llama a la función para obtener la siguiente página de resultados dependiendo de la consulta actual
     pagIndicador.textContent = `Página ${currentPage}`;
     updateBtnPre();
     document.documentElement.scrollTop = 0;
